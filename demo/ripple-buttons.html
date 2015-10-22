@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ripple Button Demo - PPOffice&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    width: 120px;
+    height: 36px;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 4px;
+    outline: no">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ripple Button Demo">
+<meta property="og:url" content="http://ppoffice.github.io/demo/ripple-buttons.html">
+<meta property="og:site_name" content="PPOffice' Blog">
+<meta property="og:description" content="button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    width: 120px;
+    height: 36px;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 4px;
+    outline: no">
+<meta property="og:updated_time" content="2015-10-22T06:09:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ripple Button Demo">
+<meta name="twitter:description" content="button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    width: 120px;
+    height: 36px;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 4px;
+    outline: no">
+  
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">文档</a>
+        
+          <a class="main-nav-link" href="/categories">分类</a>
+        
+          <a class="main-nav-link" href="/tags">标签</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ppoffice.github.io"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ripple Button Demo
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/demo/ripple-buttons.html" class="article-date">
+  <time datetime="2015-03-26T13:44:28.000Z" itemprop="datePublished">2015-03-26</time>
+</a>
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <style type="text/css">
+  button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    width: 120px;
+    height: 36px;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+  }
+  button > div {position:absolute; background-color: rgba(255,255,255,0.4); border-radius: 50%;}
+  .success {background-color: #04A43B;}
+  .info {background-color: #0C9AF2;}
+  .danger {background-color: #dd0d32;}
+  .long {width: 200px;}
+  .high {height: 200px; width: 90px;}
+</style>
+<button class="success">Click Me!</button>
+<button class="info long">Click Me!</button>
+<button class="danger high">Click Me!</button>
+<script type="text/javascript">
+	var buttons = document.getElementsByTagName('button'), speed = 6;
+	for (var i = 0; i < buttons.length; i++) {
+    buttons[i].onmousedown = function (e) {
+      if(this.children.length) return false;
+			var e = e || window.event,
+          this_ = this,
+				  offsetX = e.offsetX,
+				  offsetY = e.offsetY,
+          radiusX = (this.offsetWidth - offsetX > offsetX?this.offsetWidth - offsetX:offsetX),
+          radiusY = (this.offsetHeight - offsetY > offsetY?this.offsetHeight - offsetY:offsetY),
+          offsetSize = Math.sqrt(Math.pow(radiusX,2) + Math.pow(radiusY,2)),
+          inner;
+
+      if(!this.children.length) {
+        inner = document.createElement('div');
+        this.appendChild(inner);
+      } else {
+        inner = this.children[0];
+      }
+			var interval = setInterval(function () {
+				inner.style.width = (inner.offsetWidth + speed) + 'px';
+				inner.style.height = (inner.offsetWidth + speed) + 'px';
+				inner.style.left = (offsetX - inner.offsetWidth/2) + 'px';
+				inner.style.top = (offsetY - inner.offsetHeight/2) + 'px';
+				inner.style.opacity = inner.offsetWidth/offsetSize/2;
+				if(inner.offsetWidth >= offsetSize*2 && inner.offsetHeight >= offsetSize*2) {
+					clearInterval(interval);
+				}
+			}, 10);
+		}
+		buttons[i].onmouseup = function (e) {
+      if(!this.children.length) return false;
+			var e = e || window.event,
+          this_ = this,
+  				inner = this.children[0];
+			var interval = setInterval(function () {
+				inner.style.opacity = inner.style.opacity - speed/this_.offsetWidth;
+				if(inner.style.opacity <= 0) {
+          try {
+            this_.removeChild(inner);
+          } catch(e) {}
+					clearInterval(interval);
+				}
+			}, 10);
+		}
+	};
+</script>
+      
+    </div>
+  
+    <footer class="article-footer">
+      
+    </footer>
+  
+  </div>
+  
+    
+  
+</article>
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 PPOffice&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'ppofficeongithub';
+  
+  var disqus_url = 'http://ppoffice.github.io/demo/ripple-buttons.html';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>
